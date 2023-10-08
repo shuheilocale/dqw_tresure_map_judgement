@@ -38,8 +38,7 @@ def main():
     for i in range(12):
         col1, col2 = st.columns([1, 2])
         with col1:
-            # スタイルを適用してスリムな入力欄を作成
-            number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}')
+            number = st.number_input(f'モンスター{i+1}', min_value=0, value=0, key=f'monster_{i}')
             monster_nos.append(number)
         with col2:
             try:
