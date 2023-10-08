@@ -5,6 +5,8 @@ import streamlit as st
 pip = os.popen('pip3 list').read()
 st.code(pip,language=None)
 
+import openai
+
 import pandas as pd
 #from paddleocr import PaddleOCR
 
