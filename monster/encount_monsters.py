@@ -52,7 +52,7 @@ class EncountMonsters:
         # 1匹だけいる→よく枠が全て１．１倍以上なら大量発生
         if n_very_oftens == 1:
             oftens = self.monster_list[m.Findability.OFTEN]
-            if all(m.exp_ratio == m.ExpRatio.P_ONE or monster.exp_ratio == m.ExpRatio.P_TWO for monster in oftens):
+            if all(monster.exp_ratio == m.ExpRatio.P_ONE or monster.exp_ratio == m.ExpRatio.P_TWO for monster in oftens):
                 target_monster = [
                     monster for monster in very_oftens if monster.exp_ratio == m.ExpRatio.P_ZERO][0]
                 return f'大量発生 : {target_monster.name}'
