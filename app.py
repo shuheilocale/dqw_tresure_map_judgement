@@ -35,7 +35,7 @@ def main():
             #st.write(f'モンスター{i+1}:')
         with col2:
             # スタイルを適用してスリムな入力欄を作成
-            number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}', label_visibility='hidden')
+            number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}')
             monster_nos.append(number)
         with col3:
             try:
