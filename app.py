@@ -1,8 +1,12 @@
 import os
 
 import streamlit as st
+
+pip = os.popen('pip list').read()
+st.code(pip,language=None)
+
 import pandas as pd
-from io import StringIO
+from paddleocr import PaddleOCR
 
 from monster import MonsterFactory, EncountMonsters
 
@@ -53,7 +57,6 @@ def main():
 
 
 if __name__ == '__main__':
-    from paddleocr import PaddleOCR, draw_ocr
 
     ocr = PaddleOCR(use_angle_cls=True, lang='japan')
     main()
