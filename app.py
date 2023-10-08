@@ -2,8 +2,6 @@ import os
 
 import streamlit as st
 
-pip = os.popen('pip3 list').read()
-st.code(pip,language=None)
 
 import pandas as pd
 from paddleocr import PaddleOCR
