@@ -13,7 +13,7 @@ class Findability(Enum):
 
     def short_str(self):
         if self == Findability.VERY_OFTEN:
-            return 'とてもよく'
+            return 'とても'
         if self == Findability.OFTEN:
             return 'よく'
         if self == Findability.SOMETIMES:
@@ -23,7 +23,7 @@ class Findability(Enum):
         if self == Findability.VERY_RARELY:
             return 'めったに'
         if self == Findability.RARELY_METAL:
-            return 'メタル系'
+            return 'メタル'
         if self == Findability.NOT_APPLICABLE:
             return '未登録'
         return '不明'
@@ -34,6 +34,17 @@ class ExpRatio(Enum):
     P_ONE = '1.1倍'
     P_TWO = '1.2倍'
     NO_DATA = 'データなし'
+
+    def short_str(self):
+        if self == ExpRatio.P_ZERO:
+            return '1.0'
+        if self == ExpRatio.P_ONE:
+            return '1.1'
+        if self == ExpRatio.P_TWO:
+            return '1.2'
+        if self == ExpRatio.NO_DATA:
+            return '-'
+        return '不明'
 
 
 @dataclass

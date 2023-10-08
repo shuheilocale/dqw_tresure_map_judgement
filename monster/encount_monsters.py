@@ -103,7 +103,7 @@ class EncountMonsters:
         if hide_monster_no:
             columns = ['見かけやすさ', '経験値倍率', 'モンスター名']
         else:
-            columns = ['見かけやすさ', '経験値倍率', '図鑑No.', 'モンスター名']
+            columns = ['見かけやすさ', '経験値', '図鑑No.', 'モンスター名']
         data = []
 
         for findability, monsters in self.monster_list.items():
@@ -111,7 +111,7 @@ class EncountMonsters:
                 if hide_monster_no:
                     data.append(
                         [findability.short_str(),
-                            monster.exp_ratio.value,
+                            monster.exp_ratio.short_str(),
                             monster.name]
                     )
                 else:
