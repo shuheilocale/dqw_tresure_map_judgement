@@ -7,12 +7,6 @@ from io import StringIO
 from monster import MonsterFactory, EncountMonsters
 
 
-def csv_string_to_dataframe(csv_string):
-    csv_file = StringIO(csv_string)
-    df = pd.read_csv(csv_file)
-
-    return df
-
 
 def judge(monster_nos, monster_factory):
     encount_monsters = EncountMonsters(monster_factory, monster_nos)
@@ -42,9 +36,6 @@ def main():
             number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}', label_visibility='hidden')
             monster_nos.append(number)
 
-    #for i in range(12):
-    #    number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}')
-    #    monster_nos.append(number)
 
     if st.button('判定'):
 

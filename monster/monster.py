@@ -3,13 +3,13 @@ from dataclasses import dataclass
 
 
 class Findability(Enum):
-    VERY_OFTEN = 'a.とてもよく見かける'
-    OFTEN = 'b.よく見かける'
-    SOMETIMES = 'c.ときどき見かける'
-    RARELY = 'd.あまり見かけない'
-    VERY_RARELY = 'e.めったに見かけない'
-    RARELY_METAL = 'm.あまり見かけない（メタル系）'
-    NOT_APPLICABLE = 'z.地図での出現なし（未登録）'
+    VERY_OFTEN = 'とてもよく'
+    OFTEN = 'よく'
+    SOMETIMES = 'ときどき'
+    RARELY = 'あまり'
+    VERY_RARELY = 'めったに'
+    RARELY_METAL = 'あまりメタル系'
+    NOT_APPLICABLE = '地図での出現なし'
 
 
 class ExpRatio(Enum):
