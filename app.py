@@ -19,12 +19,20 @@ def judge(monster_nos, monster_factory):
 
 
 def main():
-
+    st.set_page_config(
+        page_title='宝の地図大量発生判定',
+        page_icon='🗺'
+    )
     st.title('宝の地図大量発生判定')
     st.write('出現モンスターの図鑑No.を入力してください。')
 
-    df = pd.read_csv('monster_list.csv')
-    monster_factory = MonsterFactory(df)
+
+    if 'monster_factory' in st.session_state:
+        monster_factory = st.session_state.get('monster_factory')
+    else:
+        df = pd.read_csv('monster_list.csv')
+        monster_factory = MonsterFactory(df)
+        st.session_state.monster_factory = monster_factory
 
     monster_nos = []
     for i in range(12):
