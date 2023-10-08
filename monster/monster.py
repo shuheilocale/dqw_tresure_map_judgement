@@ -23,7 +23,7 @@ class Findability(Enum):
         if self == Findability.VERY_RARELY:
             return 'めったに'
         if self == Findability.RARELY_METAL:
-            return 'あまり（メタル系）'
+            return 'メタル系'
         if self == Findability.NOT_APPLICABLE:
             return '未登録'
         return '不明'
