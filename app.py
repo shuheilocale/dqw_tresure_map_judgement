@@ -43,9 +43,9 @@ def main():
             # 29,74,121,159,161,166,222,277,326,336,455,520
         , monster_factory)
 
-        st.write(result['msg'])
+        st.subheader(result['msg'])
 
-        st.dataframe(result['df'])
+        st.table(result['df'])
 
 
 

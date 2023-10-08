@@ -3,13 +3,30 @@ from dataclasses import dataclass
 
 
 class Findability(Enum):
-    VERY_OFTEN = 'とてもよく'
-    OFTEN = 'よく'
-    SOMETIMES = 'ときどき'
-    RARELY = 'あまり'
-    VERY_RARELY = 'めったに'
-    RARELY_METAL = 'あまりメタル系'
-    NOT_APPLICABLE = '地図での出現なし'
+    VERY_OFTEN = 'a.とてもよく見かける'
+    OFTEN = 'b.よく見かける'
+    SOMETIMES = 'c.ときどき見かける'
+    RARELY = 'd.あまり見かけない'
+    VERY_RARELY = 'e.めったに見かけない'
+    RARELY_METAL = 'm.あまり見かけない（メタル系）'
+    NOT_APPLICABLE = 'z.地図での出現なし（未登録）'
+
+    def short_str(self):
+        if self == Findability.VERY_OFTEN:
+            return 'とてもよく'
+        if self == Findability.OFTEN:
+            return 'よく'
+        if self == Findability.SOMETIMES:
+            return 'ときどき'
+        if self == Findability.RARELY:
+            return 'あまり'
+        if self == Findability.VERY_RARELY:
+            return 'めったに'
+        if self == Findability.RARELY_METAL:
+            return 'あまり（メタル系）'
+        if self == Findability.NOT_APPLICABLE:
+            return '未登録'
+        return '不明'
 
 
 class ExpRatio(Enum):

@@ -97,7 +97,7 @@ class EncountMonsters:
     for findability, monsters in self.monster_list.items():
       for monster in monsters:
         data.append(
-            [findability.value,
+            [findability.short_str(),
               monster.exp_ratio.value,
               monster.no,
               monster.name]
