@@ -28,24 +28,19 @@ def main():
 
     monster_nos = []
     for i in range(12):
-        col1, col2, col3 = st.columns([1, 1, 2])
+        col1, col2 = st.columns([1, 2])
         with col1:
-            col1.markdown("##")
-            col1.markdown(f'モンスター{i+1}:')
-            #st.write(f'モンスター{i+1}:')
-        with col2:
             # スタイルを適用してスリムな入力欄を作成
             number = st.number_input(f'モンスター{i+1}', value=0, key=f'monster_{i}')
             monster_nos.append(number)
-        with col3:
+        with col2:
             try:
                 monster = monster_factory.create_monster_by_no(number)
                 name = f'{monster.name}（{monster.findability.short_str()},{monster.exp_ratio.value}）'
-
             except:
                 name = ''
-            col3.markdown("##")
-            col3.markdown(name)
+            col2.markdown("##")
+            col2.markdown(name)
 
 
     if st.button('判定'):
