@@ -56,6 +56,8 @@ class EncountMonsters:
                 target_monster = [
                     monster for monster in very_oftens if monster.exp_ratio == m.ExpRatio.P_ZERO][0]
                 return f'大量発生 : {target_monster.name}'
+            else:
+                return '普通の地図 : とてもよく枠に1匹だけ、かつ、よく枠に1.0倍がいる'
 
         # 2匹以上いる→普通の地図
         if n_very_oftens >= 2:
