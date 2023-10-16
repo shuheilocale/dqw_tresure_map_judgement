@@ -2,11 +2,10 @@ import os
 
 import streamlit as st
 
-
 import pandas as pd
 
 from monster import MonsterFactory, EncountMonsters
-
+import settings
 
 
 def judge(monster_nos, monster_factory):
@@ -23,6 +22,7 @@ def main():
         page_title='宝の地図大量発生判定',
         page_icon='🗺'
     )
+    st.write('ver.'+settings.version)
     st.title('宝の地図大量発生判定')
     st.write('出現モンスターの図鑑No.を入力してください。')
 
@@ -73,8 +73,6 @@ def main():
 - データソース
   - すずしろ店長様
   - https://docs.google.com/spreadsheets/d/1Hz-v2lBDV5khxgFRMZAhBDWqn65Inv3vjD2NpS8FwsM/edit#gid=1463845531''')
-
-
 
 
 if __name__ == '__main__':
