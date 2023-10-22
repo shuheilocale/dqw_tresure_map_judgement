@@ -8,11 +8,11 @@ from monster import MonsterFactory, EncountMonsters
 import settings
 
 
-def judge(monster_nos, monster_factory):
+def judge(monster_nos, monster_factory, view_detail=False):
     encount_monsters = EncountMonsters(monster_factory, monster_nos)
     msg = encount_monsters.judge_mass()
     return {
-        'df': encount_monsters.to_df(),
+        'df': encount_monsters.to_df(view_detail=view_detail),
         'msg': msg
     }
 
@@ -50,13 +50,14 @@ def main():
             col2.markdown("##")
             col2.markdown(name)
 
+    view_detail = st.checkbox('耐性・弱点表示', key='view_detail')
 
     if st.button('判定'):
 
         try:
             result = judge(monster_nos
                 # 29,74,121,159,161,166,222,277,326,336,455,520
-            , monster_factory)
+            , monster_factory, view_detail)
 
             st.subheader(result['msg'])
 

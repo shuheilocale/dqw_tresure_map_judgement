@@ -99,28 +99,36 @@ class EncountMonsters:
         # いない→検証中
         return '検証中'
 
-    def to_df(self, hide_monster_no: bool = True):
+    def to_df(self, hide_monster_no: bool=True, view_detail: bool=False):
 
         if hide_monster_no:
-            columns = ['見かけ', '経倍', 'モンスター名']+m.StrengthWeakness.to_column()
+            columns = ['見かけ', '経倍', 'モンスター名']
         else:
-            columns = ['見かけ', '経倍', '図鑑No.', 'モンスター名']+m.StrengthWeakness.to_column()
+            columns = ['見かけ', '経倍', '図鑑No.', 'モンスター名']
+
+        if view_detail:
+            columns += m.StrengthWeakness.to_column()
+
         data = []
 
         for findability, monsters in self.monster_list.items():
             for monster in monsters:
                 if hide_monster_no:
-                    data.append(
-                        [findability.short_str(),
+
+                    add_data = [findability.short_str(),
                             monster.exp_ratio.short_str(),
-                            monster.name]+monster.strength_weakness.to_list()
-                    )
+                            monster.name]
+                    if view_detail:
+                        add_data += monster.strength_weakness.to_list()
+                    data.append(add_data)
                 else:
-                    data.append(
-                        [findability.short_str(),
-                         monster.exp_ratio.value,
-                         monster.no,
-                         monster.name]+monster.strength_weakness.to_list()
-                    )
+
+                    add_data = [findability.short_str(),
+                            monster.exp_ratio.short_str(),
+                            monster.no,
+                            monster.name]
+                    if view_detail:
+                        add_data += monster.strength_weakness.to_list()
+                    data.append(add_data)
 
         return pd.DataFrame(data, columns=columns).set_index('見かけ')
