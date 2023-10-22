@@ -2,7 +2,6 @@ import pandas as pd
 
 from . import monster as m
 
-
 class EncountMonsters:
 
     def __init__(self, monster_factory: m.MonsterFactory, monster_no_list: list):
@@ -15,7 +14,7 @@ class EncountMonsters:
             raise ValueError(f'おかしなモンスターの組み合わせです：{str(err)}')
 
     def construct(self, monster_list: list):
-        # とても良く　= 4体
+        # とても良く = 4体
         # よく = 3体
         # ときどき = 2体
         # あまり = 1体
@@ -97,15 +96,15 @@ class EncountMonsters:
         if n_sometimes >= 2:
             return '普通の地図 ときどき枠に等倍が2匹以上いる'
 
-        # いない　→　検証中
+        # いない→検証中
         return '検証中'
 
     def to_df(self, hide_monster_no: bool = True):
 
         if hide_monster_no:
-            columns = ['見かけやすさ', '経験値倍率', 'モンスター名']
+            columns = ['見かけ', '経倍', 'モンスター名']+m.StrengthWeakness.to_column()
         else:
-            columns = ['見かけやすさ', '経験値', '図鑑No.', 'モンスター名']
+            columns = ['見かけ', '経倍', '図鑑No.', 'モンスター名']+m.StrengthWeakness.to_column()
         data = []
 
         for findability, monsters in self.monster_list.items():
@@ -114,14 +113,14 @@ class EncountMonsters:
                     data.append(
                         [findability.short_str(),
                             monster.exp_ratio.short_str(),
-                            monster.name]
+                            monster.name]+monster.strength_weakness.to_list()
                     )
                 else:
                     data.append(
                         [findability.short_str(),
                          monster.exp_ratio.value,
                          monster.no,
-                         monster.name]
+                         monster.name]+monster.strength_weakness.to_list()
                     )
 
-        return pd.DataFrame(data, columns=columns).set_index('見かけやすさ')
+        return pd.DataFrame(data, columns=columns).set_index('見かけ')

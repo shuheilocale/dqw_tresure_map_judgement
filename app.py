@@ -31,7 +31,8 @@ def main():
         monster_factory = st.session_state.get('monster_factory')
     else:
         df = pd.read_csv('monster_list.csv')
-        monster_factory = MonsterFactory(df)
+        df_sw = pd.read_csv('strength_weakness_list.csv')
+        monster_factory = MonsterFactory(df, df_sw)
         st.session_state.monster_factory = monster_factory
 
     monster_nos = []
@@ -69,11 +70,12 @@ def main():
     #### 参考元
 - 判定ロジック
   - すずしろ店長様
-  - https://twitter.com/Lv20_HP140MP80/status/1709521858377466185
+    - https://twitter.com/Lv20_HP140MP80/status/1709521858377466185
 - データソース
   - すずしろ店長様
-  - https://docs.google.com/spreadsheets/d/1Hz-v2lBDV5khxgFRMZAhBDWqn65Inv3vjD2NpS8FwsM/edit#gid=1463845531''')
-
+    - https://docs.google.com/spreadsheets/d/1Hz-v2lBDV5khxgFRMZAhBDWqn65Inv3vjD2NpS8FwsM/edit#gid=1463845531
+  - さおちゃん様
+    - https://docs.google.com/spreadsheets/d/13oEPbzv0MHVW4CwmC17aL8kbU6_pj5llvO4aHvdh8OA/edit#gid=1889598122''')
 
 if __name__ == '__main__':
 

@@ -1,6 +1,7 @@
 from enum import Enum
 from dataclasses import dataclass
 
+import pandas as pd
 
 class Findability(Enum):
     VERY_OFTEN = 'a.とてもよく見かける'
@@ -13,17 +14,17 @@ class Findability(Enum):
 
     def short_str(self):
         if self == Findability.VERY_OFTEN:
-            return 'とても'
+            return 'とて'
         if self == Findability.OFTEN:
             return 'よく'
         if self == Findability.SOMETIMES:
-            return 'ときどき'
+            return 'とき'
         if self == Findability.RARELY:
-            return 'あまり'
+            return 'あま'
         if self == Findability.VERY_RARELY:
-            return 'めったに'
+            return 'めっ'
         if self == Findability.RARELY_METAL:
-            return 'メタル'
+            return 'メタ'
         if self == Findability.NOT_APPLICABLE:
             return '未登録'
         return '不明'
@@ -46,6 +47,38 @@ class ExpRatio(Enum):
             return '-'
         return '不明'
 
+class StrengthWeakness:
+
+    def __init__(self, frizz: float = None, sizz: float = None, bang: float = None, crack: float = None, woosh: float = None, zap: float = None, zam: float = None, crag: float = None):
+        # ja:メラ	ギラ	イオ	ヒャド	バギ	デイン	ドルマ	ジバリア
+        # en:Frizz    Sizz	Bang	Crack	Woosh	Zap	Zam	Crag
+        self.frizz = frizz
+        self.sizz = sizz
+        self.bang = bang
+        self.crack = crack
+        self.woosh = woosh
+        self.zap = zap
+        self.zam = zam
+        self.crag = crag
+
+    def to_list(self):
+        arr = []
+        # float to str
+        for elem in [self.frizz, self.sizz, self.bang, self.crack, self.woosh, self.zap, self.zam, self.crag]:
+            if elem is not None:
+                arr.append(str(elem).rstrip('0').rstrip('.'))
+            else:
+                arr.append('-')
+
+        return arr
+
+    @staticmethod
+    def to_column(ja=True):
+        if ja:
+            return ['メラ', 'ギラ', 'イオ', 'ヒャ', 'バギ', 'デイ', 'ドル', 'ジバ']
+        else:
+            return ['Frizz', 'Sizz', 'Bang', 'Crack', 'Woosh', 'Zap', 'Zam', 'Crag']
+
 
 @dataclass
 class Monster:
@@ -53,11 +86,20 @@ class Monster:
     name: str
     exp_ratio: str
     findability: Findability
+    strength_weakness: StrengthWeakness
 
 
 class MonsterFactory():
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, df, df_sw):
+        #self.df = df
+        #self.df_sw = df_sw
+        merged = df.merge(df_sw[['図鑑No.','メラ','ギラ','イオ','ヒャド','バギ','デイン','ドルマ','ジバリア']],
+                          on='図鑑No.', how='left', suffixes=('', '_right'))
+        for col in df.columns:
+            if col + "_right" in merged.columns:
+                merged[col] = merged[col + "_right"]
+        self.df = merged.drop(columns=[col for col in merged.columns if "_right" in col])
+
 
     def create_monster_by_name(self, monster_name: str):
         filtered_df = self.df[self.df['モンスター名'] == monster_name]
@@ -72,11 +114,30 @@ class MonsterFactory():
                 if exp_ratio_elem.value == target['経験値倍率']:
                     break
 
+            # 耐性・弱点
+            def trans(val):
+                if val == '-':
+                    return None
+                if val == '無効':
+                    return 0.0
+                return float(val)
+
+            frizz = trans(target['メラ'])
+            sizz = trans(target['ギラ'])
+            bang = trans(target['イオ'])
+            crack = trans(target['ヒャド'])
+            woosh = trans(target['バギ'])
+            zap = trans(target['デイン'])
+            zam = trans(target['ドルマ'])
+            crag = trans(target['ジバリア'])
+            strength_weakness = StrengthWeakness(frizz, sizz, bang, crack, woosh, zap, zam, crag)
+
             return Monster(
                 no=target['図鑑No.'],
                 name=target['モンスター名'],
                 exp_ratio=exp_ratio_elem,
-                findability=findability_elem
+                findability=findability_elem,
+                strength_weakness=strength_weakness
             )
         else:
             raise ValueError(f'{monster_name} は存在しません。')
@@ -94,11 +155,30 @@ class MonsterFactory():
                 if exp_ratio_elem.value == target['経験値倍率']:
                     break
 
+            # 耐性・弱点
+            def trans(val):
+                if val == '-':
+                    return None
+                if val == '無効':
+                    return 0.0
+                return float(val)
+
+            frizz = trans(target['メラ'])
+            sizz = trans(target['ギラ'])
+            bang = trans(target['イオ'])
+            crack = trans(target['ヒャド'])
+            woosh = trans(target['バギ'])
+            zap = trans(target['デイン'])
+            zam = trans(target['ドルマ'])
+            crag = trans(target['ジバリア'])
+            strength_weakness = StrengthWeakness(frizz, sizz, bang, crack, woosh, zap, zam, crag)
+
             return Monster(
                 no=target['図鑑No.'],
                 name=target['モンスター名'],
                 exp_ratio=exp_ratio_elem,
-                findability=findability_elem
+                findability=findability_elem,
+                strength_weakness=strength_weakness
             )
         else:
             raise ValueError(f'図鑑No.{monster_no} は存在しません。')
