@@ -67,6 +67,12 @@ def main():
 
 
 
+    st.write('---')
+    x_url = 'https://twitter.com/shuheilocale'
+    st.write(f'お問合せは[shuheilocale@x]({x_url})')
+    st.write(f'役に立ったという方はお土産をいただけると嬉しいです →→→ 786kajs0ud2n')
+    st.write('---')
+
     st.markdown('''
     #### 参考元
 - 判定ロジック
